@@ -1,0 +1,11 @@
+//  Nasconde gli attributi con valore "N/A" dalle informazioni aggiuntive dei prodotti
+
+add_filter('woocommerce_display_product_attributes', function($attributes, $product) {
+    foreach ($attributes as $key => $attr) {
+        $value = trim(strip_tags($attr['value'])); // pulizia testo
+        if (strcasecmp($value, 'N/A') === 0) {     // confronto case-insensitive
+            unset($attributes[$key]);              // rimuove la riga
+        }
+    }
+    return $attributes;
+}, 10, 2);

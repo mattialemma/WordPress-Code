@@ -1,0 +1,44 @@
+// 🎨 SOLO COLORE pulsanti checkout WooCommerce (compatibile con Elementor Free & Woo Blocks)
+add_action('wp_head', function () { ?>
+<style>
+/* imposta qui i tuoi colori */
+:root{
+  --btn-primary: #AF5A00;       /* colore normale */
+  --btn-primary-hover: #8C4900; /* colore hover */
+}
+
+/* WooCommerce classico (carrello + checkout + place order) */
+.woocommerce .wc-proceed-to-checkout a.checkout-button,
+.woocommerce a.checkout-button,
+.woocommerce #place_order,
+.woocommerce button#place_order,
+.woocommerce input#place_order {
+  background-color: var(--btn-primary) !important;
+  color: #fff !important;
+  border-color: var(--btn-primary) !important;
+	border-radius:25px 25px 25px 25px !important;
+}
+
+/* WooCommerce Blocks (cart/checkout Gutenberg) */
+.wc-block-cart__submit-container .wc-block-cart__submit-button,
+.wc-block-checkout__actions_row .wc-block-components-checkout-place-order-button,
+.wc-block-components-button .wc-block-components-button__button.is-primary {
+  background-color: var(--btn-primary) !important;
+  color: #fff !important;
+  border-color: var(--btn-primary) !important;
+	border-radius:25px 25px 25px 25px !important;
+}
+
+/* Hover */
+.woocommerce .wc-proceed-to-checkout a.checkout-button:hover,
+.woocommerce a.checkout-button:hover,
+.woocommerce #place_order:hover,
+.wc-block-cart__submit-container .wc-block-cart__submit-button:hover,
+.wc-block-checkout__actions_row .wc-block-components-checkout-place-order-button:hover,
+.wc-block-components-button .wc-block-components-button__button.is-primary:hover {
+  background-color: var(--btn-primary-hover) !important;
+  border-color: var(--btn-primary-hover) !important;
+  color: #fff !important;
+}
+</style>
+<?php });

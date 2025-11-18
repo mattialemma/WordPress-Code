@@ -1,0 +1,149 @@
+
+//  Arrotonda selettore quantità e menu a tendina WooCommerce
+add_action('wp_head', function() {
+    if (!is_product()) return;
+    ?>
+    <style>
+    /* --- Menu a tendina (variabili: Peso, Confezione, ecc.) --- */
+    .woocommerce div.product form.cart .variations select,
+    .woocommerce div.product .woocommerce-variation-add-to-cart select,
+    .woocommerce div.product .cart .variations select {
+        border-radius: 25px !important;
+        padding: 10px 18px !important;
+        border: 2px solid #ccc !important;
+        background-color: #fff !important;
+        font-size: 15px;
+        transition: all 0.25s ease;
+        outline: none !important;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    .woocommerce div.product form.cart .variations select:focus,
+    .woocommerce div.product form.cart .variations select:hover {
+        border-color: #ff5c00 !important;
+        box-shadow: 0 0 0 3px rgba(255, 92, 0, 0.2);
+        background-color: #fff8f3 !important;
+    }
+
+    /* Freccia color brand */
+    .woocommerce div.product form.cart .variations select {
+        background-image: linear-gradient(45deg, transparent 50%, #ff5c00 50%),
+                          linear-gradient(135deg, #ff5c00 50%, transparent 50%);
+        background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+        background-size: 6px 6px, 6px 6px;
+        background-repeat: no-repeat;
+    }
+    .woocommerce div.product form.cart .variations select:focus,
+    .woocommerce div.product form.cart .variations select:hover {
+        background-image: linear-gradient(45deg, transparent 50%, #d94e00 50%),
+                          linear-gradient(135deg, #d94e00 50%, transparent 50%);
+    }
+
+    /* --- Selettore quantità --- */
+    .woocommerce div.product form.cart .quantity {
+        display: inline-flex;
+        align-items: center;
+        border: 2px solid #ccc !important;
+        border-radius: 25px !important;
+        overflow: hidden;
+        background: #fff !important;
+        transition: all 0.25s ease;
+    }
+
+    /* Input quantità */
+    .woocommerce div.product form.cart .quantity input.qty {
+        border: none !important;
+        text-align: center;
+        width: 60px;
+        font-size: 16px;
+        padding: 10px 0;
+        background: transparent !important;
+        outline: none !important;
+    }
+
+    /* Pulsanti + e - */
+    .woocommerce div.product form.cart .quantity button {
+        background: #fff !important;
+        border: none !important;
+        font-weight: 600;
+        font-size: 18px;
+        width: 38px;
+        cursor: pointer;
+        color: #555;
+        transition: all 0.25s ease;
+    }
+    .woocommerce div.product form.cart .quantity button:hover {
+        background: #ff5c00 !important;
+        color: #fff !important;
+    }
+
+    /* Effetto focus sull’intero blocco */
+    .woocommerce div.product form.cart .quantity:focus-within {
+        border-color: #ff5c00 !important;
+        box-shadow: 0 0 0 3px rgba(255, 92, 0, 0.2);
+    }
+    </style>
+    <?php
+});
+
+
+add_action('wp_head', function () {
+  if (!is_product()) return; ?>
+  <style>
+  /* ✅ Evita overflow dei testi lunghi ovunque */
+  .woocommerce .woocommerce-Tabs-panel--additional_information td,
+  .woocommerce .woocommerce-Tabs-panel--additional_information td p,
+  .woocommerce .woocommerce-Tabs-panel--additional_information td span,
+  .woocommerce .woocommerce-Tabs-panel--additional_information td a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+  }
+
+  /* 📱 Fix layout mobile: le righe diventano "card" a 1 colonna */
+  @media (max-width: 768px){
+    .woocommerce .woocommerce-Tabs-panel--additional_information table.shop_attributes,
+    .woocommerce .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes{
+      display:block !important;
+      width:100% !important;
+      border-spacing: 0 !important;      /* niente gap laterali */
+    }
+    .woocommerce .woocommerce-Tabs-panel--additional_information .shop_attributes tr,
+    .woocommerce .woocommerce-Tabs-panel--additional_information .woocommerce-product-attributes tr{
+      display:block;
+      margin:0 0 12px 0;                  /* spazio tra le “card” */
+    }
+    /* Celle a blocchi, full-width */
+    .woocommerce .woocommerce-Tabs-panel--additional_information .shop_attributes th,
+    .woocommerce .woocommerce-Tabs-panel--additional_information .woocommerce-product-attributes th,
+    .woocommerce .woocommerce-Tabs-panel--additional_information .shop_attributes td,
+    .woocommerce .woocommerce-Tabs-panel--additional_information .woocommerce-product-attributes td{
+      display:block;
+      width:100% !important;
+      box-sizing:border-box;
+    }
+    /* Bordo/angoli corretti in verticale */
+    .woocommerce .woocommerce-Tabs-panel--additional_information .shop_attributes th,
+    .woocommerce .woocommerce-Tabs-panel--additional_information .woocommerce-product-attributes th{
+      border-right: 1px solid #e5e7eb !important; /* ripristina il bordo esterno */
+      border-radius:12px 12px 0 0 !important;
+      padding:14px 16px !important;
+    }
+    .woocommerce .woocommerce-Tabs-panel--additional_information .shop_attributes td,
+    .woocommerce .woocommerce-Tabs-panel--additional_information .woocommerce-product-attributes td{
+      border-left: 1px solid #e5e7eb !important;  /* ripristina il bordo esterno */
+      border-top:none !important;
+      border-radius:0 0 12px 12px !important;
+      padding:16px 18px !important;               /* un po’ più aria al testo */
+    }
+    /* Se usi i “chip”, garantisci capo e niente overflow */
+    .woocommerce .woocommerce-Tabs-panel--additional_information td a,
+    .woocommerce .woocommerce-Tabs-panel--additional_information td span{
+      white-space: normal;
+    }
+  }
+  </style>
+<?php });

@@ -1,0 +1,38 @@
+//  Cambia colore ai pulsanti WooCommerce (Aggiungi al carrello, Compra ora, ecc.)
+add_action('wp_head', function() {
+    ?>
+    <style>
+    /* --- WooCommerce Buttons --- */
+    .woocommerce a.button,
+    .woocommerce button.button,
+    .woocommerce input.button,
+    .woocommerce #respond input#submit,
+    .woocommerce .single_add_to_cart_button,
+    .woocommerce button.alt,
+    .woocommerce a.button.alt {
+        background-color: #D9AE83 !important; /* 🔹 colore di sfondo */
+        color: #fff !important;                /* 🔹 colore testo */
+        border: none !important;
+        border-radius: 25px;                    /* 🔹 angoli arrotondati */
+        padding: 12px 22px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Hover state */
+    .woocommerce a.button:hover,
+    .woocommerce button.button:hover,
+    .woocommerce input.button:hover,
+    .woocommerce #respond input#submit:hover,
+    .woocommerce .single_add_to_cart_button:hover,
+    .woocommerce button.alt:hover,
+    .woocommerce a.button.alt:hover {
+        background-color: #872A00 !important; /* 🔹 colore hover */
+        color: #fff !important;
+        transform: translateY(-2px);
+    }
+    </style>
+    <?php
+});

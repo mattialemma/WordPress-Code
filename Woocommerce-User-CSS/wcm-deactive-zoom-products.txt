@@ -1,0 +1,11 @@
+add_action( 'wp', function() {
+    remove_theme_support( 'wc-product-gallery-zoom' );
+});
+
+add_filter('woocommerce_product_tabs', function ($tabs) {
+    if (isset($tabs['additional_information'])) {
+        $tabs['additional_information']['title'] = 'Dettagli';
+        $tabs['additional_information']['class'] = ['tab-dettagli'];
+    }
+    return $tabs;
+}, 20);

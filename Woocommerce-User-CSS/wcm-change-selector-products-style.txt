@@ -1,0 +1,45 @@
+//  Cambia colore selettore prodotto variabile (focus e hover)
+add_action('wp_head', function() {
+    if (!is_product()) return;
+    ?>
+    <style>
+    /* --- Menu a tendina delle variazioni (es. Peso, Confezione) --- */
+    .woocommerce div.product form.cart .variations select,
+    .woocommerce div.product .woocommerce-variation-add-to-cart select,
+    .woocommerce div.product .cart .variations select {
+        border-radius: 25px !important;
+        padding: 10px 18px !important;
+        border: 2px solid #ccc !important;
+        background-color: #fff !important;
+        font-size: 15px;
+        transition: all 0.25s ease;
+        outline: none !important;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    /*  Quando il selettore è attivo o al passaggio del mouse */
+    .woocommerce div.product form.cart .variations select:focus,
+    .woocommerce div.product form.cart .variations select:hover {
+        border-color: #ff5c00 !important;     /* << Cambia qui il colore evidenziato */
+        box-shadow: 0 0 0 3px rgba(255, 92, 0, 0.2); /* glow morbido attorno */
+        background-color: #fff8f3 !important;  /* leggero sfondo personalizzato */
+    }
+
+    /* Freccia personalizzata (opzionale, per dare un tocco moderno) */
+    .woocommerce div.product form.cart .variations select {
+        background-image: linear-gradient(45deg, transparent 50%, #ff5c00 50%),
+                          linear-gradient(135deg, #ff5c00 50%, transparent 50%);
+        background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+        background-size: 6px 6px, 6px 6px;
+        background-repeat: no-repeat;
+    }
+    .woocommerce div.product form.cart .variations select:focus,
+    .woocommerce div.product form.cart .variations select:hover {
+        background-image: linear-gradient(45deg, transparent 50%, #d94e00 50%),
+                          linear-gradient(135deg, #d94e00 50%, transparent 50%);
+    }
+    </style>
+    <?php
+});

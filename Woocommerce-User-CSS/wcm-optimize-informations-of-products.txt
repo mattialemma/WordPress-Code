@@ -1,0 +1,190 @@
+// Migliora lo stile delle informazioni aggiuntive dei prodotti
+
+// Stile "Dettagli/Informazioni aggiuntive" con padding ampio e senza bordo centrale
+add_action('wp_head', function () {
+    if ( ! is_product() ) return; ?>
+    <style>
+    /* Spazio verticale tra le righe */
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes{
+        border-collapse: separate !important;
+        border-spacing: 0 14px !important; /* ↑ stacca le righe tra loro */
+        width: 100%;
+    }
+
+    /* Celle base */
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes th,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes td,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes th,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes td{
+        background: #fff;
+        border: 1px solid #e5e7eb !important;
+        vertical-align: top;
+        border-radius: 12px;
+        /* padding generico (poi lo spezziamo sotto per colonna) */
+        padding: 16px 24px !important;
+        box-sizing: border-box;
+        background-clip: padding-box; /* evita che il bg tocchi il bordo curvo */
+    }
+
+/* Colonna sinistra (etichette) – centrata verticalmente + no bordo destro */
+.woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes th,
+.woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes th,
+.woocommerce div.product .woocommerce-Tabs-panel--additional_information th.woocommerce-product-attributes-item__label {
+    width: 28%;
+    font-weight: 700;
+    color: #111;
+    background: #fafafa;
+    padding: 16px 18px !important;
+    border-right: none !important;          /* elimina bordo centrale */
+    border-radius: 12px 0 0 12px !important;
+    text-align: center;                     /* testo centrato orizzontalmente */
+    vertical-align: middle !important;      /* testo centrato verticalmente */
+}
+
+
+    /* Colonna destra (valori/descrizione) – grande gutter interno + niente bordo sinistro */
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes td,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes td,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information td.woocommerce-product-attributes-item__value{
+        padding: 18px 32px !important;          /* << aumenta lo “stacco” dai bordi */
+        border-left: none !important;           /* << elimina il bordo centrale */
+        border-radius: 0 12px 12px 0 !important;
+        line-height: 1.55;
+    }
+
+    /* Reset margini paragrafi/valori dentro le celle */
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information td p,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information td span{
+        margin: 0 0 6px 0 !important;
+    }
+
+    /* Valori multipli come chip (facoltativo, lascia pure) */
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information td a,
+    .woocommerce div.product .woocommerce-Tabs-panel--additional_information td span{
+        display: inline-block;
+        padding: 6px 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 999px;
+        background: #f9fafb;
+        line-height: 1.25;
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+
+    /* Mobile: bordi corretti quando le celle vanno a blocchi */
+    @media (max-width: 768px){
+        .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes th,
+        .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes th{
+            border-radius: 12px 12px 0 0 !important;
+        }
+        .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.shop_attributes td,
+        .woocommerce div.product .woocommerce-Tabs-panel--additional_information table.woocommerce-product-attributes td{
+            border-radius: 0 0 12px 12px !important;
+        }
+    }
+    </style>
+<?php });
+
+
+
+//  Nasconde gli attributi con valore "N/A"
+add_filter('woocommerce_display_product_attributes', function($attributes, $product) {
+    foreach ($attributes as $key => $attr) {
+        $value = trim(strip_tags($attr['value'])); // pulizia testo
+        if (strcasecmp($value, 'N/A') === 0) {     // confronto case-insensitive
+            unset($attributes[$key]);              // rimuove la riga
+        }
+    }
+    return $attributes;
+}, 10, 2);
+
+
+
+
+//  Cambia colore ai pulsanti WooCommerce (Aggiungi al carrello, Compra ora, ecc.)
+add_action('wp_head', function() {
+    ?>
+    <style>
+    /* --- WooCommerce Buttons --- */
+    .woocommerce a.button,
+    .woocommerce button.button,
+    .woocommerce input.button,
+    .woocommerce #respond input#submit,
+    .woocommerce .single_add_to_cart_button,
+    .woocommerce button.alt,
+    .woocommerce a.button.alt {
+        background-color: #D9AE83 !important; /* 🔹 colore di sfondo */
+        color: #fff !important;                /* 🔹 colore testo */
+        border: none !important;
+        border-radius: 25px;                    /* 🔹 angoli arrotondati */
+        padding: 12px 22px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Hover state */
+    .woocommerce a.button:hover,
+    .woocommerce button.button:hover,
+    .woocommerce input.button:hover,
+    .woocommerce #respond input#submit:hover,
+    .woocommerce .single_add_to_cart_button:hover,
+    .woocommerce button.alt:hover,
+    .woocommerce a.button.alt:hover {
+        background-color: #872A00 !important; /* 🔹 colore hover */
+        color: #fff !important;
+        transform: translateY(-2px);
+    }
+    </style>
+    <?php
+});
+
+
+
+//  Cambia colore selettore prodotto variabile (focus e hover)
+add_action('wp_head', function() {
+    if (!is_product()) return;
+    ?>
+    <style>
+    /* --- Menu a tendina delle variazioni (es. Peso, Confezione) --- */
+    .woocommerce div.product form.cart .variations select,
+    .woocommerce div.product .woocommerce-variation-add-to-cart select,
+    .woocommerce div.product .cart .variations select {
+        border-radius: 25px !important;
+        padding: 10px 18px !important;
+        border: 2px solid #ccc !important;
+        background-color: #fff !important;
+        font-size: 15px;
+        transition: all 0.25s ease;
+        outline: none !important;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    /*  Quando il selettore è attivo o al passaggio del mouse */
+    .woocommerce div.product form.cart .variations select:focus,
+    .woocommerce div.product form.cart .variations select:hover {
+        border-color: #ff5c00 !important;     /* << Cambia qui il colore evidenziato */
+        box-shadow: 0 0 0 3px rgba(255, 92, 0, 0.2); /* glow morbido attorno */
+        background-color: #fff8f3 !important;  /* leggero sfondo personalizzato */
+    }
+
+    /* Freccia personalizzata (opzionale, per dare un tocco moderno) */
+    .woocommerce div.product form.cart .variations select {
+        background-image: linear-gradient(45deg, transparent 50%, #ff5c00 50%),
+                          linear-gradient(135deg, #ff5c00 50%, transparent 50%);
+        background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+        background-size: 6px 6px, 6px 6px;
+        background-repeat: no-repeat;
+    }
+    .woocommerce div.product form.cart .variations select:focus,
+    .woocommerce div.product form.cart .variations select:hover {
+        background-image: linear-gradient(45deg, transparent 50%, #d94e00 50%),
+                          linear-gradient(135deg, #d94e00 50%, transparent 50%);
+    }
+    </style>
+    <?php
+});
